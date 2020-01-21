@@ -53,9 +53,10 @@ companies1[sample(nrow(companies1), 30), ]
 # --------- stringdist
 # install.packages("stringdist")
 library(stringdist)
-
 ClosestMatch = function(string, stringVector){
-  
-  stringVector[amatch(string, stringVector, maxDist=Inf)]
-  
+  options(stringsAsFactors=F)
+  res <- stringVector[amatch(string, stringVector, maxDist=Inf)]
+  score <- stringsim(string,res)
+  res.df <- data.frame(string=string,res=res,score=score)
+  return(res.df)
 }
